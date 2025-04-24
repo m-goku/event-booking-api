@@ -16,7 +16,7 @@ app.use("/auth", authRouter);
 /*
 - both events and bookings route will require authentication 
 */
-app.use("/events", AuthenticateUser, eventRouter);
+app.use("/events", eventRouter);
 app.use("/bookings", AuthenticateUser, bookingRouter);
 
 app.listen(PORT, () => {

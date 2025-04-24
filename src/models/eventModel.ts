@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-import { eventType } from "../types/types";
+import { eventType, category } from "../types/types";
 
 // - Create Event Schema
 const eventSchema = new Schema<eventType>({
@@ -19,6 +19,10 @@ const eventSchema = new Schema<eventType>({
   category: {
     type: String,
     required: true,
+    enum: category,
+  },
+  image: {
+    type: String,
   },
   price: {
     type: Number,
@@ -29,12 +33,12 @@ const eventSchema = new Schema<eventType>({
     required: true,
   },
   organizer: {
-    type: Schema.Types.ObjectId,
+    type: String,
     required: true,
   },
   attendees: {
     type: [Schema.Types.ObjectId],
-    required: true,
+    ref: "User",
   },
 });
 

@@ -6,7 +6,7 @@ import {
   NotFound404,
 } from "../utils/responses";
 
-interface AuthenticationRequest extends Request {
+export interface AuthenticationRequest extends Request {
   user: {
     name: string;
     _id: string;

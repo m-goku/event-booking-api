@@ -5,6 +5,19 @@ export enum role {
   Attendee = "Attendee",
 }
 
+export enum category {
+  Arts = "Arts",
+  Music = "Music",
+  Education = "Education",
+  Business = "Business",
+  Health = "Health",
+  Sports = "Sports",
+  Community = "Community",
+  Gaming = "Gaming",
+  Party = "Party",
+  Technology = "Technology",
+}
+
 export interface userRegistrationType {
   name: string;
   email: string;
@@ -21,10 +34,11 @@ export interface eventType {
   title: string;
   description: string;
   date: Date;
-  category: string;
+  category: category;
+  image: string;
   price: number;
   capacity: number;
-  organizer: Schema.Types.ObjectId;
+  organizer: string;
   attendees: [Schema.Types.ObjectId];
 }
 
