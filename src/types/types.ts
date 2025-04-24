@@ -1,0 +1,36 @@
+import { Schema } from "mongoose";
+
+export enum role {
+  Organizer = "Organizer",
+  Attendee = "Attendee",
+}
+
+export interface userRegistrationType {
+  name: string;
+  email: string;
+  password: string;
+  role: role;
+}
+
+export interface userSignInType {
+  email: string;
+  password: string;
+}
+
+export interface eventType {
+  title: string;
+  description: string;
+  date: Date;
+  category: string;
+  price: number;
+  capacity: number;
+  organizer: Schema.Types.ObjectId;
+  attendees: [Schema.Types.ObjectId];
+}
+
+export interface bookingType {
+  event: Schema.Types.ObjectId;
+  user: Schema.Types.ObjectId;
+  numberOfTickets: number;
+  totalPrice: number;
+}
