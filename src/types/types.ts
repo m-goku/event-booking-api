@@ -38,7 +38,7 @@ export interface eventType {
   image: string;
   price: number;
   capacity: number;
-  organizer: string;
+  organizer: Schema.Types.ObjectId;
   attendees: [Schema.Types.ObjectId];
 }
 

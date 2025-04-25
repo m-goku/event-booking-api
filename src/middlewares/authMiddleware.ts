@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { verifyToken } from "../utils/tokenUtils";
+import { Schema } from "mongoose";
 import {
   Forbidden403,
   InternalServerError500,

@@ -33,7 +33,8 @@ const eventSchema = new Schema<eventType>({
     required: true,
   },
   organizer: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: "User",
     required: true,
   },
   attendees: {

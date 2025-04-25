@@ -24,7 +24,7 @@ export const getAllEvents = async (req: Request, res: Response) => {
 export const getEvent = async (req: Request, res: Response) => {
   try {
     const eventId = req.params.id;
-    const event = await Event.findById(eventId);
+    const event = (await Event.findById(eventId)).populate("organizer", "name");
     if (!event) {
       return NotFound404(res, "Event With Given ID not Found");
     }
@@ -38,7 +38,7 @@ export const getEvent = async (req: Request, res: Response) => {
 export const addEvent = async (req: AuthenticationRequest, res: Response) => {
   try {
     const event: eventType = req.body;
-    const userName = req.user.name;
+    const userName = req.user._id;
     const newEvent = new Event({
       ...event,
       organizer: userName,
@@ -60,12 +60,15 @@ export const updateEvent = async (
   try {
     const eventUpdate = req.body;
     const eventId = req.params.id;
-    const userName = req.user.name;
-    const event = await Event.findById(eventId);
-    if (!event) {
-      return NotFound404(res, "Event With Given ID not Found");
+    const userId = req.user._id;
+    const { organizer }: any = await Event.findById(eventId).populate(
+      "organizer"
+    );
+
+    if (!organizer) {
+      return NotFound404(res, "Organizer of this event not found");
     }
-    if (!(userName === event.organizer)) {
+    if (!(userId === organizer._id.toString())) {
       return Forbidden403(res, "You cannot Update an Event you did't create");
     }
     const updatedEvent = await Event.findByIdAndUpdate(eventId, eventUpdate, {
@@ -85,12 +88,14 @@ export const deleteEvent = async (
 ) => {
   try {
     const eventId = req.params.id;
-    const userName = req.user.name;
-    const event = await Event.findById(eventId);
-    if (!event) {
-      return NotFound404(res, "Event With Given ID not Found");
+    const userId = req.user._id;
+    const { organizer }: any = await Event.findById(eventId).populate(
+      "organizer"
+    );
+    if (!organizer) {
+      return NotFound404(res, "Organizer of this event not found");
     }
-    if (!(userName === event.organizer)) {
+    if (!(userId === organizer._id.toString())) {
       return Forbidden403(res, "You cannot Delete an Event you did't create");
     }
     const deletedEvent = await Event.findByIdAndDelete(eventId, {
