@@ -10,4 +10,4 @@ export const bookingRouter = express.Router();
 
 bookingRouter.get("/", getAllBookings);
 bookingRouter.get("/:id", getBooking);
-bookingRouter.post("create/", createBooking);
+bookingRouter.post("/create", createBooking);

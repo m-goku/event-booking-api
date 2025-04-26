@@ -38,10 +38,10 @@ export const getEvent = async (req: Request, res: Response) => {
 export const addEvent = async (req: AuthenticationRequest, res: Response) => {
   try {
     const event: eventType = req.body;
-    const userName = req.user._id;
+    const userId = req.user._id;
     const newEvent = new Event({
       ...event,
-      organizer: userName,
+      organizer: userId,
       attendees: [],
     });
 
@@ -68,7 +68,7 @@ export const updateEvent = async (
     if (!organizer) {
       return NotFound404(res, "Organizer of this event not found");
     }
-    if (!(userId === organizer._id.toString())) {
+    if (!(userId.toString() === organizer._id.toString())) {
       return Forbidden403(res, "You cannot Update an Event you did't create");
     }
     const updatedEvent = await Event.findByIdAndUpdate(eventId, eventUpdate, {
@@ -95,7 +95,7 @@ export const deleteEvent = async (
     if (!organizer) {
       return NotFound404(res, "Organizer of this event not found");
     }
-    if (!(userId === organizer._id.toString())) {
+    if (!(userId.toString() === organizer._id.toString())) {
       return Forbidden403(res, "You cannot Delete an Event you did't create");
     }
     const deletedEvent = await Event.findByIdAndDelete(eventId, {

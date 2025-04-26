@@ -6,11 +6,12 @@ import {
   InternalServerError500,
   NotFound404,
 } from "../utils/responses";
+import { logger } from "../utils/loggerUtils";
 
 export interface AuthenticationRequest extends Request {
   user: {
     name: string;
-    _id: string;
+    _id: Schema.Types.ObjectId;
     role: string;
   };
 }
@@ -44,7 +45,8 @@ export const AuthenticateUser = (
       role: payload.role,
     };
   } catch (error) {
-    return InternalServerError500(res, error.message);
+    logger.error(error.message);
+    return InternalServerError500(res, error);
   }
   next();
 };

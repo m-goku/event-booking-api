@@ -39,7 +39,7 @@ export interface eventType {
   price: number;
   capacity: number;
   organizer: Schema.Types.ObjectId;
-  attendees: [Schema.Types.ObjectId];
+  attendees: string[];
 }
 
 export interface bookingType {

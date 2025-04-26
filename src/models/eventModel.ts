@@ -38,8 +38,7 @@ const eventSchema = new Schema<eventType>({
     required: true,
   },
   attendees: {
-    type: [Schema.Types.ObjectId],
-    ref: "User",
+    type: [String],
   },
 });
 
