@@ -24,7 +24,7 @@ export const getAllEvents = async (req: Request, res: Response) => {
 export const getEvent = async (req: Request, res: Response) => {
   try {
     const eventId = req.params.id;
-    const event = (await Event.findById(eventId)).populate("organizer", "name");
+    const event = await Event.findById(eventId).populate("organizer", "name");
     if (!event) {
       return NotFound404(res, "Event With Given ID not Found");
     }
